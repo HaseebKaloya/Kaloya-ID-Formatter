@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Kaloya ID Formatter — Settings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:        #0e1015;
+      --surface:   #161a22;
+      --surface2:  #1d2130;
+      --border:    #262c3a;
+      --border2:   #2f3648;
+      --accent:    #4f7cff;
+      --accent-bg: #111c3a;
+      --green:     #30d97a;
+      --green-bg:  #0a2019;
+      --text:      #e4e8f2;
+      --text2:     #8b92ab;
+      --text3:     #4f5772;
+      --red:       #ff5252;
+      --radius:    12px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(14,16,21,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 36px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .topbar-left { display: flex; align-items: center; gap: 13px; }
+    .logo {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: linear-gradient(140deg, #4f7cff 0%, #8452fa 100%);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 16px rgba(79,124,255,0.3);
+    }
+    .topbar-title { font-size: 15px; font-weight: 700; letter-spacing: -0.2px; }
+    .topbar-sub   { font-size: 11.5px; color: var(--text3); margin-top: 2px; }
+    .owner-chip {
+      font-size: 11px; font-weight: 600; color: var(--accent);
+      background: var(--accent-bg); border: 1px solid rgba(79,124,255,0.25);
+      border-radius: 20px; padding: 5px 14px;
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    /* ── LAYOUT ── */
+    .container { max-width: 740px; margin: 0 auto; padding: 32px 24px 120px; }
+
+    /* section heading */
+    .sec-heading {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.09em;
+      color: var(--text3); text-transform: uppercase;
+      margin: 28px 0 12px; display: flex; align-items: center; gap: 8px;
+    }
+    .sec-heading::after { content:''; flex: 1; height: 1px; background: var(--border); }
+
+    /* cards */
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 22px 24px; margin-bottom: 14px;
+    }
+
+    /* owner card */
+    .owner-card {
+      background: var(--accent-bg); border: 1px solid rgba(79,124,255,0.2);
+      border-radius: var(--radius); padding: 20px 22px;
+      display: flex; align-items: center; gap: 18px; margin-bottom: 14px;
+    }
+    .owner-avatar {
+      width: 50px; height: 50px; border-radius: 14px; flex-shrink: 0;
+      background: linear-gradient(140deg,#4f7cff,#8452fa);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .owner-name  { font-size: 15px; font-weight: 700; }
+    .owner-role  { font-size: 11.5px; color: var(--text3); margin: 3px 0 10px; }
+    .owner-contacts { display: flex; flex-direction: column; gap: 5px; }
+    .owner-contact {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 12px; color: var(--text2);
+      text-decoration: none; transition: color 0.15s;
+    }
+    .owner-contact:hover { color: var(--accent); }
+    .contact-icon {
+      width: 22px; height: 22px; border-radius: 6px;
+      background: rgba(79,124,255,0.15); border: 1px solid rgba(79,124,255,0.2);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+
+    /* preset grid */
+    .preset-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+    .preset-card {
+      background: var(--surface2); border: 1.5px solid var(--border2);
+      border-radius: 10px; padding: 13px 15px; cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .preset-card:hover { border-color: rgba(79,124,255,0.5); }
+    .preset-card.active { border-color: var(--accent); background: var(--accent-bg); }
+    .preset-val  { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; color: var(--accent); }
+    .preset-name { font-size: 11px; color: var(--text3); margin-top: 3px; }
+    .preset-ex   { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--green); margin-top: 6px; }
+
+    /* inputs */
+    .field-label { font-size: 12.5px; font-weight: 600; color: var(--text2); display: block; margin-bottom: 6px; }
+    .field-hint  { font-size: 11px; color: var(--text3); margin-top: 6px; line-height: 1.6; }
+
+    input[type="text"], textarea {
+      width: 100%; background: var(--bg);
+      border: 1px solid var(--border2); border-radius: 8px;
+      padding: 9px 13px; color: var(--text);
+      font-family: 'DM Mono', monospace; font-size: 13px;
+      outline: none; transition: border-color 0.2s;
+    }
+    input[type="text"]:focus, textarea:focus { border-color: var(--accent); }
+    textarea { resize: vertical; min-height: 88px; line-height: 1.7; font-size: 12.5px; }
+    .field-group { margin-bottom: 16px; }
+
+    /* toggle rows */
+    .toggle-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 0; border-bottom: 1px solid var(--border);
+    }
+    .toggle-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .toggle-info-label { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+    .toggle-info-sub   { font-size: 11.5px; color: var(--text3); }
+    .toggle-switch { position: relative; width: 44px; height: 24px; cursor: pointer; flex-shrink: 0; }
+    .toggle-switch input { display: none; }
+    .track { position: absolute; inset: 0; background: var(--surface2); border: 1px solid var(--border2); border-radius: 24px; transition: background 0.2s, border-color 0.2s; }
+    .thumb { position: absolute; width: 18px; height: 18px; top: 3px; left: 3px; background: var(--text3); border-radius: 50%; transition: transform 0.2s, background 0.2s; box-shadow: 0 1px 4px rgba(0,0,0,0.4); }
+    .toggle-switch input:checked ~ .track { background: var(--accent); border-color: var(--accent); }
+    .toggle-switch input:checked ~ .thumb { transform: translateX(20px); background: #fff; }
+
+    /* whitelist section — shown/hidden */
+    .whitelist-section { display: none; }
+    .whitelist-section.visible { display: block; }
+
+    /* whitelist tags UI */
+    .tag-input-row { display: flex; gap: 8px; margin-bottom: 10px; }
+    .tag-input-row input { flex: 1; font-family: 'DM Mono', monospace; }
+    .btn-tag-add {
+      background: var(--accent); color: #fff; border: none; border-radius: 8px;
+      padding: 9px 16px; font-family: 'DM Sans', sans-serif;
+      font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap;
+      display: flex; align-items: center; gap: 6px;
+      transition: background 0.15s;
+    }
+    .btn-tag-add:hover { background: #3a63e8; }
+    .tag-list { display: flex; flex-wrap: wrap; gap: 7px; min-height: 32px; }
+    .tag {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--surface2); border: 1px solid var(--border2);
+      border-radius: 6px; padding: 4px 10px;
+      font-family: 'DM Mono', monospace; font-size: 11.5px; color: var(--text2);
+    }
+    .tag-remove {
+      background: none; border: none; color: var(--text3); cursor: pointer;
+      padding: 0; line-height: 1; display: flex; align-items: center;
+      transition: color 0.15s;
+    }
+    .tag-remove:hover { color: var(--red); }
+    .tag-empty { font-size: 12px; color: var(--text3); padding: 4px 0; }
+
+    /* custom patterns */
+    .custom-add-row { display: flex; gap: 8px; margin-bottom: 12px; }
+    .custom-add-row input { flex: 1; }
+    .custom-list { display: flex; flex-direction: column; gap: 7px; }
+    .custom-item {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--surface2); border: 1px solid var(--border2);
+      border-radius: 9px; padding: 10px 14px;
+    }
+    .ci-name { font-size: 12.5px; color: var(--text2); flex: 1; }
+    .ci-val  { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; color: var(--accent); }
+    .btn-ci-use {
+      background: var(--accent-bg); border: 1px solid rgba(79,124,255,0.3);
+      color: var(--accent); border-radius: 6px;
+      padding: 4px 10px; font-size: 11px; font-weight: 600; cursor: pointer;
+      font-family: 'DM Sans', sans-serif; transition: background 0.15s;
+    }
+    .btn-ci-use:hover { background: rgba(79,124,255,0.2); }
+    .btn-ci-del {
+      background: none; border: none; color: var(--text3); cursor: pointer;
+      display: flex; align-items: center; padding: 0;
+      transition: color 0.15s;
+    }
+    .btn-ci-del:hover { color: var(--red); }
+    .no-patterns { font-size: 12px; color: var(--text3); padding: 8px 0; }
+
+    /* save bar */
+    .save-bar {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: rgba(14,16,21,0.96); backdrop-filter: blur(10px);
+      border-top: 1px solid var(--border);
+      padding: 14px 36px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .save-bar-left { font-size: 11.5px; color: var(--text3); }
+    .save-bar-right { display: flex; gap: 10px; }
+    .btn-reset {
+      background: var(--surface); color: var(--text2);
+      border: 1px solid var(--border2); border-radius: 9px;
+      padding: 10px 20px; font-family: 'DM Sans', sans-serif;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .btn-reset:hover { border-color: var(--red); color: var(--red); }
+    .btn-save {
+      background: var(--accent); color: #fff; border: none;
+      border-radius: 9px; padding: 10px 26px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px; font-weight: 700; cursor: pointer;
+      display: flex; align-items: center; gap: 8px;
+      transition: background 0.15s;
+    }
+    .btn-save:hover { background: #3a63e8; }
+
+    /* toast */
+    .toast {
+      position: fixed; bottom: 70px; left: 50%; transform: translateX(-50%) translateY(10px);
+      background: var(--green-bg); border: 1px solid rgba(48,217,122,0.3);
+      color: var(--green); padding: 10px 22px; border-radius: 10px;
+      font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px;
+      opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="logo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="5" width="18" height="14" rx="3" stroke="#fff" stroke-width="1.8"/>
+        <path d="M7 12h4M13 12h4M7 9h2M15 9h2M7 15h4M13 15h2" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="topbar-title">Kaloya ID Formatter</div>
+      <div class="topbar-sub">Settings &amp; Configuration</div>
+    </div>
+  </div>
+  <div class="owner-chip">
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.8"/>
+      <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+    Haseeb Kaloya
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Owner info -->
+  <div class="sec-heading">Developer &amp; Owner</div>
+  <div class="owner-card">
+    <div class="owner-avatar">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="8" r="4" stroke="#fff" stroke-width="1.8"/>
+        <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="owner-name">Haseeb Kaloya</div>
+      <div class="owner-role">Developer &amp; Owner — Kaloya ID Formatter</div>
+      <div class="owner-contacts">
+        <a class="owner-contact" href="mailto:haseebkaloya@gmail.com">
+          <div class="contact-icon">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
+              <rect x="2" y="4" width="20" height="16" rx="3" stroke="currentColor" stroke-width="1.8"/>
+              <path d="M2 8l10 7 10-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </div>
+          haseebkaloya@gmail.com
+        </a>
+        <a class="owner-contact" href="tel:03451622556">
+          <div class="contact-icon">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
+              <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          0345-1622556
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Formatting Pattern -->
+  <div class="sec-heading">Formatting Pattern</div>
+  <div class="card">
+    <div class="preset-grid" id="presetGrid"></div>
+    <div class="field-group">
+      <label class="field-label">Custom / Active Pattern</label>
+      <input type="text" id="customPatternInput" placeholder="e.g. 3-3-4-rest"/>
+      <p class="field-hint">Use numbers split by hyphens. Each number = characters in that segment. Add <strong>rest</strong> at the end for variable-length IDs. Example: <strong>2-4-5-rest</strong> → AB-CDEF-GHIJK-LMNO</p>
+    </div>
+  </div>
+
+  <!-- Behaviour -->
+  <div class="sec-heading">Behaviour</div>
+  <div class="card">
+    <div class="toggle-row">
+      <div>
+        <div class="toggle-info-label">Smart Field Detection</div>
+        <div class="toggle-info-sub">Only format fields that look like ID or reference number inputs</div>
+      </div>
+      <label class="toggle-switch"><input type="checkbox" id="smartDetect"><div class="track"></div><div class="thumb"></div></label>
+    </div>
+    <div class="toggle-row">
+      <div>
+        <div class="toggle-info-label">Active by Default</div>
+        <div class="toggle-info-sub">Formatter is on whenever you open a new page</div>
+      </div>
+      <label class="toggle-switch"><input type="checkbox" id="enabledToggle"><div class="track"></div><div class="thumb"></div></label>
+    </div>
+    <div class="toggle-row">
+      <div>
+        <div class="toggle-info-label">Restrict to Specific Websites</div>
+        <div class="toggle-info-sub">Only run on websites you add to the list below</div>
+      </div>
+      <label class="toggle-switch"><input type="checkbox" id="useWhitelist"><div class="track"></div><div class="thumb"></div></label>
+    </div>
+  </div>
+
+  <!-- Allowed Websites — shown only when whitelist is toggled on -->
+  <div class="whitelist-section" id="whitelistSection">
+    <div class="sec-heading">Allowed Websites</div>
+    <div class="card">
+      <div class="field-group">
+        <label class="field-label">Add a website</label>
+        <div class="tag-input-row">
+          <input type="text" id="siteInput" placeholder="e.g. iris.fbr.gov.pk"/>
+          <button class="btn-tag-add" id="addSiteBtn">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+              <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            </svg>
+            Add Site
+          </button>
+        </div>
+        <p class="field-hint">The formatter will only run on websites in this list. Subdomains are matched automatically (e.g. adding <strong>fbr.gov.pk</strong> also covers <strong>iris.fbr.gov.pk</strong>).</p>
+      </div>
+      <div class="tag-list" id="tagList">
+        <span class="tag-empty">No websites added yet.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Patterns -->
+  <div class="sec-heading">Saved Custom Patterns</div>
+  <div class="card">
+    <div class="custom-add-row">
+      <input type="text" id="newPatternName" placeholder="Pattern name (e.g. Invoice Format)"/>
+      <input type="text" id="newPatternVal"  placeholder="Pattern (e.g. 4-6-rest)" style="max-width:155px;"/>
+      <button class="btn-tag-add" id="addPatternBtn">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+          <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+        </svg>
+        Save
+      </button>
+    </div>
+    <div class="custom-list" id="customPatternList"></div>
+  </div>
+
+</div>
+
+<!-- SAVE BAR -->
+<div class="save-bar">
+  <div class="save-bar-left">All settings are stored locally on your device</div>
+  <div class="save-bar-right">
+    <button class="btn-reset" id="resetBtn">Reset Defaults</button>
+    <button class="btn-save" id="saveBtn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+        <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Save Settings
+    </button>
+  </div>
+</div>
+
+<div class="toast" id="toast">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+    <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  Settings saved successfully
+</div>
+
+<script src="options.js"></script>
+</body>
+</html>

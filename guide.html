@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Kaloya ID Formatter — Pattern Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:      #0e1015;
+      --surface: #161a22;
+      --border:  #262c3a;
+      --accent:  #4f7cff;
+      --green:   #30d97a;
+      --text:    #e4e8f2;
+      --text2:   #8b92ab;
+      --text3:   #4f5772;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg); color: var(--text);
+      min-height: 100vh; -webkit-font-smoothing: antialiased;
+    }
+
+    .topbar {
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 16px 40px; display: flex; align-items: center; gap: 14px;
+    }
+    .logo {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: linear-gradient(140deg,#4f7cff,#8452fa);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .topbar h1 { font-size: 15px; font-weight: 700; }
+    .topbar p  { font-size: 11.5px; color: var(--text3); margin-top: 2px; }
+
+    .container { max-width: 700px; margin: 0 auto; padding: 40px 24px 60px; }
+
+    .intro {
+      background: var(--surface); border: 1px solid var(--border);
+      border-left: 3px solid var(--accent); border-radius: 10px;
+      padding: 16px 20px; font-size: 13.5px; color: var(--text2);
+      line-height: 1.75; margin-bottom: 32px;
+    }
+    code {
+      background: rgba(79,124,255,0.12); border: 1px solid rgba(79,124,255,0.2);
+      border-radius: 4px; padding: 1px 7px;
+      font-family: 'DM Mono', monospace; font-size: 12.5px; color: var(--accent);
+    }
+
+    .sec { margin-bottom: 32px; }
+    .sec-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.09em;
+      text-transform: uppercase; color: var(--text3);
+      margin-bottom: 14px; display: flex; align-items: center; gap: 10px;
+    }
+    .sec-title::after { content:''; flex:1; height:1px; background: var(--border); }
+
+    table { width: 100%; border-collapse: collapse; }
+    thead tr { border-bottom: 1px solid var(--border); }
+    th {
+      text-align: left; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.07em; text-transform: uppercase;
+      color: var(--text3); padding: 8px 14px;
+    }
+    td {
+      padding: 13px 14px; border-bottom: 1px solid rgba(38,44,58,0.5);
+      font-size: 13px; vertical-align: middle;
+    }
+    tr:last-child td { border-bottom: none; }
+    .td-pattern {
+      font-family: 'DM Mono', monospace; font-size: 13.5px;
+      font-weight: 500; color: var(--accent);
+    }
+    .td-use   { color: var(--text2); }
+    .td-ex    { font-family: 'DM Mono', monospace; font-size: 12.5px; color: var(--green); }
+    tbody tr:hover td { background: rgba(255,255,255,0.02); }
+
+    .info-box {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px 20px; margin-top: 16px;
+      font-size: 13px; color: var(--text2); line-height: 1.75;
+    }
+
+    .keyword-grid {
+      display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px;
+    }
+    .kw {
+      font-family: 'DM Mono', monospace; font-size: 12px;
+      background: rgba(79,124,255,0.08); border: 1px solid rgba(79,124,255,0.18);
+      color: var(--accent); border-radius: 5px; padding: 3px 10px;
+    }
+
+    .footer {
+      margin-top: 48px; padding-top: 22px; border-top: 1px solid var(--border);
+      display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+    }
+    .footer-brand { font-size: 13px; font-weight: 700; color: var(--text2); }
+    .footer-copy  { font-size: 11.5px; color: var(--text3); margin-top: 4px; }
+    .footer-contacts { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
+    .footer-contact {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 12px; color: var(--text3); text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-contact:hover { color: var(--accent); }
+    .fc-icon {
+      width: 20px; height: 20px; border-radius: 5px;
+      background: var(--surface); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">
+    <svg width="19" height="19" viewBox="0 0 24 24" fill="none">
+      <rect x="3" y="5" width="18" height="14" rx="3" stroke="#fff" stroke-width="1.8"/>
+      <path d="M7 12h4M13 12h4M7 9h2M15 9h2M7 15h4M13 15h2" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <div>
+    <h1>Kaloya ID Formatter</h1>
+    <p>Pattern Guide &amp; Reference</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="intro">
+    A <strong style="color:var(--text)">pattern</strong> is a sequence of numbers separated by hyphens. Each number defines how many characters go into that segment. The formatter strips any existing hyphens from your input, then rebuilds it according to the pattern — inserting hyphens at exactly the right positions. Use <code>rest</code> as the final segment to capture all remaining characters regardless of length.
+  </div>
+
+  <div class="sec">
+    <div class="sec-title">Built-in Patterns</div>
+    <table>
+      <thead><tr><th>Pattern</th><th>Best For</th><th>Example Output</th></tr></thead>
+      <tbody>
+        <tr><td class="td-pattern">2-4-5-rest</td><td class="td-use">FBR / CPR Reference Numbers</td><td class="td-ex">AB-CDEF-GHIJK-LMN</td></tr>
+        <tr><td class="td-pattern">3-3-4</td>      <td class="td-use">Phone Numbers</td>            <td class="td-ex">051-234-5678</td></tr>
+        <tr><td class="td-pattern">4-4-4-4</td>    <td class="td-use">Credit Card Numbers</td>      <td class="td-ex">1234-5678-9012-3456</td></tr>
+        <tr><td class="td-pattern">5-7-1</td>      <td class="td-use">Pakistani CNIC</td>           <td class="td-ex">35202-1234567-8</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec">
+    <div class="sec-title">Writing Custom Patterns</div>
+    <table>
+      <thead><tr><th>Pattern</th><th>Meaning</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td class="td-pattern">3-3-4</td>      <td class="td-use">3 chars · 3 chars · 4 chars</td>               <td class="td-ex">ABC-DEF-GHIJ</td></tr>
+        <tr><td class="td-pattern">4-4-4-4</td>    <td class="td-use">Four groups of 4 characters each</td>          <td class="td-ex">ABCD-EFGH-IJKL-MNOP</td></tr>
+        <tr><td class="td-pattern">2-4-5-rest</td> <td class="td-use">2, then 4, then 5, then all remaining</td>     <td class="td-ex">AB-CDEF-GHIJK-LMNOPQ</td></tr>
+        <tr><td class="td-pattern">6-rest</td>     <td class="td-use">6 characters, then everything else</td>        <td class="td-ex">ABCDEF-GHIJKLMNO</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box">
+      If an input is shorter than the pattern expects, the formatter simply formats what it has and stops cleanly — no errors, no leftover hyphens. Inputs that already contain hyphens are automatically stripped and reformatted from scratch.
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-title">Smart Detection Keywords</div>
+    <p style="font-size:13px;color:var(--text2);line-height:1.7;">When <strong style="color:var(--text)">Smart Field Detection</strong> is enabled, the formatter looks for these words in field names, labels, placeholders, and class names before deciding to apply formatting:</p>
+    <div class="keyword-grid">
+      <span class="kw">cpr</span><span class="kw">cnic</span><span class="kw">ntn</span>
+      <span class="kw">reference</span><span class="kw">ref</span><span class="kw">receipt</span>
+      <span class="kw">token</span><span class="kw">invoice</span><span class="kw">id</span>
+      <span class="kw">payment</span><span class="kw">tracking</span><span class="kw">code</span>
+      <span class="kw">serial</span><span class="kw">registration</span><span class="kw">fbr</span><span class="kw">tax</span>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div>
+      <div class="footer-brand">Kaloya ID Formatter</div>
+      <div class="footer-copy">© Haseeb Kaloya — All Rights Reserved · v1.0.0</div>
+    </div>
+    <div class="footer-contacts">
+      <a class="footer-contact" href="mailto:haseebkaloya@gmail.com">
+        <div class="fc-icon">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
+            <rect x="2" y="4" width="20" height="16" rx="3" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M2 8l10 7 10-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </div>
+        haseebkaloya@gmail.com
+      </a>
+      <a class="footer-contact" href="tel:03451622556">
+        <div class="fc-icon">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
+            <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        0345-1622556
+      </a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

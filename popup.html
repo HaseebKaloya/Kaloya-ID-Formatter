@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Kaloya ID Formatter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:        #111318;
+      --surface:   #1a1d24;
+      --surface2:  #21252e;
+      --border:    #2a2f3a;
+      --border2:   #333848;
+      --accent:    #4f7cff;
+      --accent2:   #3a63e8;
+      --green:     #30d97a;
+      --green-dim: #0d2e1c;
+      --text:      #e8eaf0;
+      --text2:     #8b91a8;
+      --text3:     #555d72;
+      --red:       #ff5c5c;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      width: 340px;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      padding: 16px 18px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+    }
+    .header-left { display: flex; align-items: center; gap: 11px; }
+    .logo {
+      width: 34px; height: 34px;
+      background: linear-gradient(140deg, #4f7cff 0%, #8452fa 100%);
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 14px rgba(79,124,255,0.35);
+      flex-shrink: 0;
+    }
+    .header-name { font-size: 13.5px; font-weight: 700; letter-spacing: -0.2px; }
+    .header-sub  { font-size: 11px; color: var(--text3); margin-top: 1px; }
+
+    .version-pill {
+      font-size: 10px; font-weight: 600;
+      color: var(--text3); background: var(--surface);
+      border: 1px solid var(--border); border-radius: 20px;
+      padding: 3px 9px; letter-spacing: 0.02em;
+    }
+
+    /* ── BODY ── */
+    .body { padding: 14px; display: flex; flex-direction: column; gap: 11px; }
+
+    /* toggle card */
+    .toggle-card {
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 13px 15px;
+      transition: border-color 0.2s;
+    }
+    .toggle-card.active { border-color: rgba(79,124,255,0.4); background: #161b2a; }
+    .toggle-left { display: flex; align-items: center; gap: 11px; }
+    .status-orb {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--text3);
+      box-shadow: none;
+      transition: background 0.3s, box-shadow 0.3s;
+      flex-shrink: 0;
+    }
+    .status-orb.on {
+      background: var(--green);
+      box-shadow: 0 0 8px rgba(48,217,122,0.6);
+    }
+    .toggle-title { font-size: 13px; font-weight: 600; }
+    .toggle-sub   { font-size: 11px; color: var(--text3); margin-top: 2px; }
+
+    .toggle-switch { position: relative; width: 42px; height: 23px; cursor: pointer; flex-shrink: 0; }
+    .toggle-switch input { display: none; }
+    .track {
+      position: absolute; inset: 0;
+      background: var(--surface2); border: 1px solid var(--border2);
+      border-radius: 23px; transition: background 0.2s, border-color 0.2s;
+    }
+    .thumb {
+      position: absolute; width: 17px; height: 17px;
+      top: 3px; left: 3px;
+      background: var(--text3); border-radius: 50%;
+      transition: transform 0.2s, background 0.2s;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    }
+    .toggle-switch input:checked ~ .track { background: var(--accent); border-color: var(--accent); }
+    .toggle-switch input:checked ~ .thumb { transform: translateX(19px); background: #fff; }
+
+    /* section label */
+    .section-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+      color: var(--text3); text-transform: uppercase; margin-bottom: 7px;
+    }
+
+    /* pattern row */
+    .pattern-row {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 11px 14px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .pattern-icon-wrap {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: var(--surface2); border: 1px solid var(--border2);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .pattern-code {
+      font-family: 'DM Mono', monospace;
+      font-size: 14.5px; font-weight: 500; color: var(--accent);
+      letter-spacing: 0.04em;
+    }
+    .pattern-desc { font-size: 11px; color: var(--text3); margin-top: 3px; }
+
+    /* preview box */
+    .preview-box {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 13px 14px;
+    }
+    .demo-label-row {
+      display: flex; align-items: center; gap: 7px;
+      margin-bottom: 9px;
+    }
+    .demo-label-row svg { color: var(--text3); }
+    .demo-label-text { font-size: 11px; color: var(--text3); }
+    .demo-input {
+      width: 100%; background: var(--bg);
+      border: 1px solid var(--border2); border-radius: 8px;
+      padding: 9px 12px; color: var(--text);
+      font-family: 'DM Mono', monospace; font-size: 12.5px;
+      outline: none; transition: border-color 0.2s;
+    }
+    .demo-input::placeholder { color: var(--text3); }
+    .demo-input:focus { border-color: var(--accent); }
+    .demo-divider {
+      display: flex; align-items: center; gap: 8px; margin: 9px 0;
+    }
+    .demo-divider-line { flex: 1; height: 1px; background: var(--border); }
+    .demo-divider svg { color: var(--text3); flex-shrink: 0; }
+    .demo-output {
+      background: var(--green-dim); border: 1px solid rgba(48,217,122,0.18);
+      border-radius: 8px; padding: 9px 12px;
+      font-family: 'DM Mono', monospace; font-size: 13.5px; font-weight: 500;
+      color: var(--green); min-height: 38px; letter-spacing: 0.05em;
+      transition: opacity 0.15s;
+    }
+    .demo-output.empty { color: var(--text3); font-family: 'DM Sans', sans-serif; font-size: 11.5px; font-weight: 400; }
+
+    /* buttons */
+    .btn-row { display: flex; gap: 8px; }
+    .btn {
+      flex: 1; padding: 9px 0; border: none; border-radius: 9px;
+      cursor: pointer; font-family: 'DM Sans', sans-serif;
+      font-size: 12px; font-weight: 600;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+    .btn:hover { opacity: 0.88; }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary   { background: var(--accent); color: #fff; }
+    .btn-secondary { background: var(--surface); color: var(--text2); border: 1px solid var(--border); }
+
+    /* footer / contact */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 10px 18px 12px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-owner { font-size: 10.5px; font-weight: 600; color: var(--text3); }
+    .footer-links { display: flex; flex-direction: column; gap: 3px; align-items: flex-end; }
+    .footer-link {
+      font-size: 10px; color: var(--text3);
+      text-decoration: none; display: flex; align-items: center; gap: 5px;
+      transition: color 0.15s;
+    }
+    .footer-link:hover { color: var(--accent); }
+    .footer-link svg { flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <div class="logo">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="5" width="18" height="14" rx="3" stroke="#fff" stroke-width="1.8"/>
+        <path d="M7 12h4M13 12h4M7 9h2M15 9h2M7 15h4M13 15h2" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="header-name">Kaloya ID Formatter</div>
+      <div class="header-sub">Reference code auto-formatter</div>
+    </div>
+  </div>
+  <div class="version-pill">v1.0</div>
+</div>
+
+<!-- BODY -->
+<div class="body">
+
+  <!-- Enable toggle -->
+  <div class="toggle-card" id="toggleCard">
+    <div class="toggle-left">
+      <div class="status-orb" id="statusOrb"></div>
+      <div>
+        <div class="toggle-title" id="statusTitle">Formatter Disabled</div>
+        <div class="toggle-sub" id="statusSub">Toggle to activate</div>
+      </div>
+    </div>
+    <label class="toggle-switch">
+      <input type="checkbox" id="enableToggle"/>
+      <div class="track"></div>
+      <div class="thumb"></div>
+    </label>
+  </div>
+
+  <!-- Active pattern -->
+  <div>
+    <div class="section-label">Active Pattern</div>
+    <div class="pattern-row">
+      <div class="pattern-icon-wrap">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+          <path d="M4 7h4M4 12h6M4 17h3M14 7l2 10M18 7l2 5-2 5" stroke="#4f7cff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div>
+        <div class="pattern-code" id="patternDisplay">2-4-5-rest</div>
+        <div class="pattern-desc" id="patternDesc">CPR / FBR Reference</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Live preview -->
+  <div class="preview-box">
+    <div class="demo-label-row">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/>
+        <path d="M12 8v4l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+      <span class="demo-label-text">Live Preview — type any ID below</span>
+    </div>
+    <input class="demo-input" id="demoInput" type="text" placeholder="e.g. ABCDEFGHIJKLMNO" maxlength="60"/>
+    <div class="demo-divider">
+      <div class="demo-divider-line"></div>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+        <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="demo-divider-line"></div>
+    </div>
+    <div class="demo-output empty" id="demoOutput">Formatted result appears here</div>
+  </div>
+
+  <!-- Action buttons -->
+  <div class="btn-row">
+    <button class="btn btn-secondary" id="openOptions">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/>
+        <path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+      </svg>
+      Settings
+    </button>
+    <button class="btn btn-primary" id="openHelp">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+        <path d="M4 6h16M4 10h12M4 14h8M4 18h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+      Pattern Guide
+    </button>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-owner">© Haseeb Kaloya</div>
+  <div class="footer-links">
+    <a class="footer-link" href="mailto:haseebkaloya@gmail.com">
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
+        <rect x="2" y="4" width="20" height="16" rx="3" stroke="currentColor" stroke-width="1.8"/>
+        <path d="M2 8l10 7 10-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+      haseebkaloya@gmail.com
+    </a>
+    <a class="footer-link" href="tel:03451622556">
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
+        <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      0345-1622556
+    </a>
+  </div>
+</div>
+
+<script src="popup.js"></script>
+</body>
+</html>

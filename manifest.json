@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "Kaloya ID Formatter",
+  "version": "1.0.0",
+  "description": "Instantly formats ID numbers and reference codes as you type. Built by Haseeb Kaloya.",
+  "author": "Haseeb Kaloya — haseebkaloya@gmail.com",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["src/formatter.js", "src/content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_page": "options.html",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "background": {
+    "service_worker": "src/background.js"
+  }
+}
