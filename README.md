@@ -7,6 +7,10 @@
 
 <br/><br/>
 
+<img src="./banner.png" alt="Kaloya ID Formatter Banner" width="100%"/>
+
+<br/><br/>
+
 <h1>Kaloya ID Formatter</h1>
 
 <p><strong>A professional Chrome extension that silently formats identification numbers,<br/>reference codes, and verification tokens in real time — exactly as you type.</strong></p>
@@ -17,7 +21,6 @@
 > [`haseebkaloya@gmail.com`](mailto:haseebkaloya@gmail.com) &nbsp;·&nbsp; [`0345-1622556`](tel:03451622556)
 
 <br/>
-![Kaloya ID Formatter Banner](./banner.png)
 ---
 
 </div>
