@@ -8,9 +8,7 @@
 <br/><br/>
 
 <img src="./banner.png" alt="Kaloya ID Formatter Banner" width="100%"/>
-
 <br/><br/>
-
 <h1>Kaloya ID Formatter</h1>
 
 <p><strong>A professional Chrome extension that silently formats identification numbers,<br/>reference codes, and verification tokens in real time — exactly as you type.</strong></p>
