@@ -17,7 +17,7 @@
 > [`haseebkaloya@gmail.com`](mailto:haseebkaloya@gmail.com) &nbsp;·&nbsp; [`0345-1622556`](tel:03451622556)
 
 <br/>
-
+![Kaloya ID Formatter Banner](./banner.png)
 ---
 
 </div>
