@@ -7,7 +7,7 @@
 
 <br/><br/>
 
-
+<img src="./banner.png" alt="Kaloya ID Formatter Banner" width="100%"/>
 <br/><br/>
 <h1>Kaloya ID Formatter</h1>
 
