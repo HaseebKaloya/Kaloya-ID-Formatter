@@ -355,7 +355,7 @@ This project is licensed under the **MIT License**.
 See the [`LICENSE`](./LICENSE) file for the full legal text.
 
 ```
-Copyright (c) 2025 Haseeb Kaloya
+Copyright (c) 2026 Haseeb Kaloya
 ```
 
 ---
